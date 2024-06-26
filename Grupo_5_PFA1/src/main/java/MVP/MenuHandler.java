@@ -33,6 +33,7 @@ public class MenuHandler {
             switch (input) {
                 case 1:
                     game.gameStart();
+                    System.out.println(game.getReadyPlayerQueue().toString());
                     break;
                 case 2:
                     System.exit(0);
@@ -48,7 +49,6 @@ public class MenuHandler {
      * @return the valid integer input from the user
      * @author Lorenzo
      */
-
     private int getUserInput() {
         int input = 0;
         boolean validInput = false;
