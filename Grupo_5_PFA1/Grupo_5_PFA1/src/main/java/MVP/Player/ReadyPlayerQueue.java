@@ -76,19 +76,6 @@ public class ReadyPlayerQueue {
         nodePlayerQ.setNext(null);
         return nodePlayerQ;
     }
-    /**
-     * Removes the head node of the queue.
-     *
-     * @return the head node of the queue
-     * @author Deyber
-     */
-    public void pollHead() {
-        
-        NodePlayer nodePlayerQ = this.head;
-        this.head = this.head.getNext();
-        nodePlayerQ.setNext(null);
-       
-    }
 
     /**
      * Removes the node containing the player with the specified name from the queue and returns the player's name.

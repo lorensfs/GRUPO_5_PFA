@@ -1,16 +1,15 @@
 package MVP;
 
-import MVP.GameFunctions.*;
+import MVP.GameFunctions.Game;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 
 public class MenuHandler {
 
     private final Scanner scanner=new Scanner(System.in);
     private final Game game=new Game();
-    private final Help help=new Help();
+
 
     public MenuHandler() {
     }
@@ -24,11 +23,9 @@ public class MenuHandler {
      */
     public void start() {
         while (true) {
-             
             System.out.println("\n=== MVP RACING GAME ===");
             System.out.println("1. Play game(4 players required)");
-            System.out.println("2. Help");
-            System.out.println("3. Exit\n");
+            System.out.println("2. Exit\n");
 
             int input = getUserInput();
             scanner.nextLine();
@@ -36,11 +33,9 @@ public class MenuHandler {
             switch (input) {
                 case 1:
                     game.gameStart();
+                    System.out.println(game.getReadyPlayerQueue().toString());
                     break;
                 case 2:
-                    System.out.println(help.displayHelp());
-                    break;
-                case 3:
                     System.exit(0);
                     break;
             }
@@ -54,7 +49,6 @@ public class MenuHandler {
      * @return the valid integer input from the user
      * @author Lorenzo
      */
-
     private int getUserInput() {
         int input = 0;
         boolean validInput = false;
@@ -63,14 +57,14 @@ public class MenuHandler {
             try {
                 System.out.print("Enter an integer selecting the option: ");
                 input = scanner.nextInt();
-                if (input >= 1 && input <= 3) {
+                if (input >= 1 && input <= 2) {
                     validInput = true;
                 } else {
                     System.out.println(
                             "Invalid input. Please enter a valid integer between " +
                                     1 +
                                     " and " +
-                                    3 +
+                                    2 +
                                     "."
                     );
                 }
@@ -79,7 +73,7 @@ public class MenuHandler {
                         "Invalid input. Please enter a valid integer between " +
                                 1 +
                                 " and " +
-                                3 +
+                                2 +
                                 "."
                 );
                 scanner.nextLine();

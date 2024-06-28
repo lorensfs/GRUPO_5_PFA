@@ -9,13 +9,7 @@ public class Help {
      *
      * @author X
      */
-    public String displayHelp(){
-        String info= "\nProject version 1.0.1"
-                + "\nContributors:"
-                + "\n1- "
-                + "\n2- "
-                + "\n3- "
-                + "\n4- ";
-        return info;
+    public void displayHelp(){
+
     }
 }

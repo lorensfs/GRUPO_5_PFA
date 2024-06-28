@@ -33,6 +33,4 @@ public class Player {
                 ", current position=" + position +
                 '}';
     }
-    
-    
 }

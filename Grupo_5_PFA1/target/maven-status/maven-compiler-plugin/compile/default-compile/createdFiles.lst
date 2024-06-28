@@ -1,0 +1,14 @@
+MVP\GameFunctions\Help.class
+MVP\GameFunctions\Dice.class
+MVP\Player\NodePlayer.class
+MVP\Player\Player.class
+MVP\PrizePenalty\PrizePenalty.class
+MVP\GameFunctions\Game.class
+MVP\GameFunctions\Rollable.class
+MVP\MenuHandler.class
+MVP\PrizePenalty\Operation.class
+MVP\PrizePenalty\Type.class
+MVP\Main.class
+MVP\Player\ReadyPlayerQueue.class
+MVP\PrizePenalty\PrizePenaltyStack.class
+MVP\PrizePenalty\NodePrizePenalty.class

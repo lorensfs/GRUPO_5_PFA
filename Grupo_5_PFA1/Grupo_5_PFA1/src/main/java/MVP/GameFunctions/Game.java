@@ -1,6 +1,5 @@
 package MVP.GameFunctions;
 
-import MVP.Player.NodePlayer;
 import MVP.Player.Player;
 import MVP.Player.ReadyPlayerQueue;
 import MVP.PrizePenalty.Operation;
@@ -97,59 +96,14 @@ public class Game {
      */
     public void gameStart(){
         int n=1;
-       
         while (readyPlayerQueue.size()!=4) {
             System.out.println("Player #"+n+"\n"+"ENTER YOUR NAME: ");
             String name=scanner.nextLine();
             readyPlayerQueue.offer(new Player(name));
-  
             n++;
         }
         initDataStack();
         this.state=true;
-        
-        System.out.println("\n\n Welcome to the game :D\n");
-        while (readyPlayerQueue.size()>=1){
-        ReadyPlayerQueue auxiliar = new ReadyPlayerQueue();       
-        //System.out.println(readyPlayerQueue.toString());
-        System.out.println("\nCurrent player: "+readyPlayerQueue.getHead().getData().getName()+"\nCurrent position:"
-                + readyPlayerQueue.getHead().getData().getPosition());
-        System.out.println("1. Roll the dice\n2. Abandon game\n3. Game Status");      
-        int option=scanner.nextInt();
-        switch (option) {
-                case 1:
-                    handleTurn(readyPlayerQueue.getHead().getData());
-                    Player aux = readyPlayerQueue.getHead().getData();
-                    readyPlayerQueue.pollHead();
-                    readyPlayerQueue.offer(aux);
-        //(readyPlayerQueue.getHead());
-                    //
-                    break;
-                case 2:
-                    System.out.println("Player "+readyPlayerQueue.getHead().getData().getName()+" has left the game");
-                    playerLeaveGame(readyPlayerQueue.getHead().getData().getName());
-                    break;
-                case 3:
-                    System.out.println(readyPlayerQueue.toString());
-                    break;
-                default:
-                    System.out.println(
-                        "Invalid input. Please enter a valid integer between " +
-                                1 +
-                                " and " +
-                                3 +
-                                "."
-                );
-                    break;
-            }
-        }
-        
-        
-        
-    }
-    
-    public void gameRun(){
-        
     }
 
     /**
@@ -166,42 +120,35 @@ public class Game {
         int totalRoll=(dice1.getNumberRolled()+dice2.getNumberRolled());
         int tempPosition=player.getPosition();
         if(totalRoll%2==0){
-            
-            
-            if (prizePenaltyStack.size()==0){
-                refillPrizePenaltyStack();               
-            }
             PrizePenalty tempPrizePenalty=prizePenaltyStack.pop().getData();
             if(tempPrizePenalty.getOperation().getSymbol().equals("+")){
                 int tempNumber=tempPrizePenalty.getValue();
-                player.setPosition(player.getPosition()+tempNumber);
-                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nYour penalty is"
-                        +" moving "+tempNumber+" positions ");
-                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+" positions "
-                        +"you can move "+ tempNumber+" positions "+", your new position is: "+player.getPosition());
+                player.setPosition(player.getPosition()+totalRoll+tempNumber);
+                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nYour penalty is"
+                        +" retracing "+tempNumber+" km ");
+                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
+                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
             }
             if(tempPrizePenalty.getOperation().getSymbol().equals("-")){
                 int tempNumber=tempPrizePenalty.getValue();
-                player.setPosition(player.getPosition()-tempNumber);
-                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nYour penalty is"
-                        +" going back "+tempNumber+" positions ");
-                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+" position "
-                        +"you will retrace "+ tempNumber+" positions "+", your new position is: "+player.getPosition());
+                player.setPosition(player.getPosition()+totalRoll-tempNumber);
+                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nYour reward is"
+                        +" advancing "+tempNumber+" km ");
+                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
+                        +"you can advance/retrace "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
             }
             if(tempPrizePenalty.getOperation().getSymbol().equals("=")){
                 int tempNumber=tempPrizePenalty.getValue();
-                player.setPosition(tempNumber);
-                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nYou will be moved to position 1");
-                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+" position "
-                        + "your new position is: "+player.getPosition());
+                player.setPosition(player.getPosition()+totalRoll);
+                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nNothing happened this time");
+                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
+                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
             }
-            
         }else{
             player.setPosition(player.getPosition()+totalRoll);
-            System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+" position "
-                    +"you can advance "+ totalRoll+" positions "+", your new position is: "+player.getPosition());
+            System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
+                    +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
         }
-            
     }
 
     public Player loopCyclePlayers(){
@@ -255,8 +202,8 @@ public class Game {
      *
      * @author Lorenzo
      */
-    public void playerLeaveGame(String name) {
-        
+    public void playerLeaveGame() {
+        String name=scanner.nextLine();
         readyPlayerQueue.poll(name);
     }
     /**
