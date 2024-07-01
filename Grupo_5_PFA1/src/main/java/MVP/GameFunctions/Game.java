@@ -12,24 +12,19 @@ import java.util.Scanner;
  * The {@code Game} class represents the main game controller
  * managing player queues, dice rolling, prize/penalty stacks,
  * and game operations.
- * <p>
+ * <br>
  * This class allows players to join the game, roll dice, handle
  * turns, and manage game states.
- * </p>
- * <p>
+ * <br>
  * It also includes methods for initializing game data, refilling
  * prize/penalty stacks, and managing player interactions.
- * </p>
- * <p>
+ * <br>
  * The game progresses by players taking turns based on dice rolls
  * and applying effects from the prize/penalty stack.
- * </p>
- * <p>
+ * <br>
  * Note: This class assumes the existence of other classes such as
  * {@link ReadyPlayerQueue}, {@link PrizePenaltyStack}, {@link Dice},
  * {@link Player}, {@link PrizePenalty}, and {@link Operation}.
- * </p>
- * <p>
  * Dependencies: Java Scanner class.
  *
  * @author Lorenzo
@@ -107,6 +102,21 @@ public class Game {
     }
 
     /**
+     * Checks if the game should end based on the state of the ready player queue.
+     *
+     * @return true if there are no players left in the ready player queue, indicating the game should end; false otherwise.
+     *
+     * @author Lorenzo
+     */
+    public boolean gameEnd(){
+        if(readyPlayerQueue.empty()){
+            this.state=false;
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Handles a player's turn by rolling dice, calculating new position,
      * and applying effects from the prize/penalty stack.
      *
@@ -124,32 +134,32 @@ public class Game {
             if(tempPrizePenalty.getOperation().getSymbol().equals("+")){
                 int tempNumber=tempPrizePenalty.getValue();
                 player.setPosition(player.getPosition()+totalRoll+tempNumber);
-                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nYour penalty is"
-                        +" retracing "+tempNumber+" km ");
-                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
-                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
+                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nPlayer reward is"
+                        +" advancing "+tempNumber+" km additionally ");
+                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+"KM "
+                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition()+"KM");
             }
             if(tempPrizePenalty.getOperation().getSymbol().equals("-")){
                 int tempNumber=tempPrizePenalty.getValue();
                 player.setPosition(player.getPosition()+totalRoll-tempNumber);
-                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nYour reward is"
-                        +" advancing "+tempNumber+" km ");
-                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
-                        +"you can advance/retrace "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
+                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nPlayer penalty is"
+                        +" retracing "+tempNumber+" km additionally");
+                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+"KM "
+                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition()+"KM");
             }
             if(tempPrizePenalty.getOperation().getSymbol().equals("=")){
-                int tempNumber=tempPrizePenalty.getValue();
-                player.setPosition(player.getPosition()+totalRoll);
-                System.out.println("Player "+player.getName()+"rolled a pair number."+"\nNothing happened this time");
-                System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
-                        +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
+                player.setPosition(1);
+                System.out.println("Player "+player.getName()+" rolled a pair number."+"\nPlayer is set at 1KM position");
+                System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+"KM "
+                        +"and now at "+player.getPosition()+"KM");
             }
         }else{
             player.setPosition(player.getPosition()+totalRoll);
-            System.out.println("Player "+player.getName()+ "you are currently at "+tempPosition+"KM "
-                    +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition());
+            System.out.println("Player "+player.getName()+ " you are currently at "+tempPosition+"KM "
+                    +"you can advance "+ totalRoll+"KM "+", your new position is: "+player.getPosition()+" KM");
         }
     }
+
 
     public Player loopCyclePlayers(){
         Player temp= readyPlayerQueue.poll().getData();
@@ -197,15 +207,21 @@ public class Game {
     }
 
     /**
-     * Allows a player to leave the game by removing them from the queue.
-     * Prompts the user to enter the name of the player leaving.
+     * Removes a player from the ready player queue by their name.
+     *
+     * @param playerName The name of the player to be removed.
+     * @return The name of the player removed from the queue, or null if the player was not found.
      *
      * @author Lorenzo
      */
-    public void playerLeaveGame() {
-        String name=scanner.nextLine();
-        readyPlayerQueue.poll(name);
+    public String removePlayerFromQueue(String playerName) {
+        String removedPlayer = readyPlayerQueue.poll(playerName);
+        if (removedPlayer != null) {
+            System.out.println("Player " + removedPlayer + " has left the game");
+        }
+        return removedPlayer;
     }
+
     /**
      * Lists the current players in the game queue.
      *

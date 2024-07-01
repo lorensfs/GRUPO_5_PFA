@@ -1,5 +1,5 @@
 package MVP.Player;
-
+import java.util.Scanner;
 /**
  * A simple implementation of a stack data structure using linked nodes.
  *
@@ -81,7 +81,7 @@ public class ReadyPlayerQueue {
      * Removes the node containing the player with the specified name from the queue and returns the player's name.
      * If no player with the specified name is found, returns null.
      *
-     * @param playerName the name of the player to remove from the queue
+     * @param playerName is the name attribute of Player Class
      * @return the name of the player removed from the queue, or null if the player is not found or the queue is empty
      * @author Lorenzo
      */

@@ -28,9 +28,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", current position=" + position +
-                '}';
+        return "Player='" + name + '\'' +
+                ", current position=" + position;
     }
 }
